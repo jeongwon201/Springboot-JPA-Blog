@@ -7,15 +7,22 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.spring.blog.dto.ReplySaveRequestDto;
 import com.spring.blog.model.Board;
 import com.spring.blog.model.User;
 import com.spring.blog.repository.BoardRepository;
+import com.spring.blog.repository.ReplyRepository;
+import com.spring.blog.repository.UserRepository;
 
 @Service
 public class BoardService {
 	
+	
 	@Autowired
 	private BoardRepository boardRepository;
+	
+	@Autowired
+	private ReplyRepository replyRepository;
 	
 	@Transactional
 	public void posting(Board board, User user) {
@@ -51,5 +58,15 @@ public class BoardService {
 		
 		board.setTitle(requestBoard.getTitle());
 		board.setContent(requestBoard.getContent());
+	}
+	
+	@Transactional
+	public void replyWrite(ReplySaveRequestDto replySaveRequestDto) {
+		replyRepository.mSave(replySaveRequestDto.getUserId(), replySaveRequestDto.getBoardId(), replySaveRequestDto.getContent());
+	}
+	
+	@Transactional
+	public void replyDelete(int replyId) {
+		replyRepository.deleteById(replyId);
 	}
 }
