@@ -1,1 +1,1 @@
-# blog-clone-springboot
+# Blog
